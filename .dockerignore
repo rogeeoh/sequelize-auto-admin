@@ -1,0 +1,7 @@
+.adminjs
+node_modules
+dist
+src/models
+
+npm-debug.log
+.env

@@ -1,0 +1,8 @@
+.env
+.adminjs
+.idea
+node_modules
+dist
+
+# models are auto-generated when application start
+src/models
