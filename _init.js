@@ -36,7 +36,7 @@ function initiate () {
   const { protocol, hostname, port, database, username, password } = getConnectionInfo(process.env);
   try {
     execSync('rm -rf src/models dist');
-    const args = ['node_modules/sequelize-auto/bin/sequelize-auto', '-o', './src/models', '-d', database, '-h', hostname, '-u', username, '-x', password, '-l', 'es6'];
+    const args = ['node_modules/sequelize-auto/bin/sequelize-auto', '-o', './src/models', '-d', database, '-h', hostname, '-u', username, '-x', password, '-l', 'es6', '-a', '.sequelize-auto.config.json'];
     if (port) {
       args.push('-p', port);
     }

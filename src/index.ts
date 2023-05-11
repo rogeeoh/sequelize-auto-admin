@@ -16,7 +16,8 @@ const {
   URI,
   EXCLUDES,
   ADMIN_USER = 'admin',
-  ADMIN_PASSWORD = 'password'
+  ADMIN_PASSWORD = 'password',
+  PROPERTY_ORDER
 } = process.env;
 const PORT = process.env.PORT ?? 8080;
 
@@ -57,9 +58,24 @@ const main = async () => {
   }
 
   const app = express();
+  const propertyOrder = PROPERTY_ORDER?.split(',').map(p => p.trim()) ?? [];
+
+  //
+  const resourceProperties = propertyOrder.reduce((prev, cur, index) => {
+    return { ...prev, [cur]: { position: index + 1 } };
+  }, {});
   const admin = new AdminJS({
     rootPath: '/',
-    resources: Object.values(allowedModels)
+    resources: Object.values(allowedModels).map((r) => {
+      // @ts-ignore
+      return {
+        resource: r,
+        options: {
+          properties: resourceProperties
+        }
+      };
+    })
+
   });
 
   const adminRouter = AdminJSExpress.buildAuthenticatedRouter(admin,
